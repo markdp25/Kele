@@ -16,4 +16,22 @@ class Kele
     response = self.class.get('/users/me', headers: { "authorization" => @user_auth_token })
     @data_hash = JSON.parse(response.body)
   end
+
+  def get_mentor_availability(mentor_id)
+    response = self.class.get('mentors/#{mentor_id}/student_availability', headers: { "authorization" => @user_auth_token }).to_a
+    availability = []
+    response.each do |timeslot|
+      if timeslot["booked"] == nil
+        availability.push(timeslot)
+      end
+    end
+    puts availability
+  end
+
+
+  private
+
+  def api_url(destination)
+    "https://www.bloc.io/api/v1/#{destination}"
+  end
 end
