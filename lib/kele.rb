@@ -20,6 +20,7 @@ class Kele
   end
 
   def get_mentor_availability(mentor_id)
+    #529277
     response = self.class.get('mentors/#{mentor_id}/student_availability', headers: { "authorization" => @user_auth_token }).to_a
     availability = []
     response.each do |timeslot|
@@ -43,7 +44,7 @@ class Kele
     end
 
   def create_message(sender, recipient_id, token = nil, subject, stripped_text)
-    response = self.class.get('/messages',
+    response = self.class.post('/messages',
     headers: { "authorization" => @user_auth_token },
     body: {
       sender: sender,
